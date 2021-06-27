@@ -18,6 +18,7 @@ git push -u origin main
 
 - node_modules
 - package-lock.json
+- dev.js
 
 #### `.gitignore`가 적용되지 않을 때 해결법
 
@@ -26,6 +27,16 @@ git rm -r --cached .
 git add .
 git commit -m "fixed untracked files"
 ```
+
+#### 비밀 설정 정보 관리
+
+`index.js`에서 MongoDB 연결을 위해 URI를 그대로 넣어주면 아이디와 비밀번호가 노출되기 때문에 보안상 심각한 문제가 있다. 
+
+설정 정보 파일을 만들어줄 `config` 폴더를 생성하고 [`key.js`](./config/key.js)에서 환경변수에 따라 가져올 파일을 설정해준다.
+
+로컬 환경에서는 `dev.js`에서 정보를 가져오고, 프로덕션 환경에서는 `prod.js`에서 정보를 가져와서 DB에 연결해준다.
+
+`dev.js`는 깃허브에서 공유하면 안되는 파일이므로 `.gitignore`에 추가해준다.
 
 ---
 

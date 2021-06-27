@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const config = require('./config/key');
 const { User } = require('./models/User');
 
 /**
@@ -23,7 +24,7 @@ app.use(express.json());
 // mongoose로 어플리케이션과 mongoDB 연결
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://inhalin:inhalin@node-react-boiler-plate.zn6la.mongodb.net/boilerplate?retryWrites=true&w=majority', {
+mongoose.connect(config.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
