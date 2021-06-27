@@ -33,7 +33,7 @@ mongoose.connect('mongodb+srv://inhalin:inhalin@node-react-boiler-plate.zn6la.mo
   .catch(err => console.log(err));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World! Nice to see you!')
 });
 
 app.post('/register', (req, res) => {
