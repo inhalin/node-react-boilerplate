@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const jwt = require('jsonwebtoken');
 
 // mongoose를 이용해서 schema 생성하기
 const userSchema = mongoose.Schema({
@@ -36,7 +37,7 @@ const userSchema = mongoose.Schema({
 
 // user 모델 저장 전에 실행할 메서드 정의
 userSchema.pre('save', function(next) {
-  let user = this; 
+  const user = this; 
 
   if(user.isModified('password')) {
     /**
@@ -65,11 +66,35 @@ userSchema.pre('save', function(next) {
     //     next();
     //   });
     // });
-    
+
   } else {
     next();
   }
 });
+
+// 암호화된 비밀번호와 입력한 비밀번호가 같은지 비교
+userSchema.methods.comparePassword = function(plainPassword, cb) {
+  bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
+    if(err) return cb(err);
+
+    cb(null, isMatch);
+  });
+}
+
+userSchema.methods.generateToken = function(cb) {
+  const user = this;
+
+  // jsonwebtoken을 이용해 token 생성
+  const token = jwt.sign(user._id.toHexString(), 'secretToken');
+
+  user.token = token;
+
+  user.save(function(err, user) {
+    if(err) return cb(err);
+
+    cb(null, user);
+  })
+}
 
 // schema를 모델로 감싸주기
 const User = mongoose.model('User', userSchema);
