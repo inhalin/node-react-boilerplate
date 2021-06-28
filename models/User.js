@@ -39,17 +39,33 @@ userSchema.pre('save', function(next) {
   let user = this; 
 
   if(user.isModified('password')) {
-    // 비밀번호 암호화
-    bcrypt.genSalt(saltRounds, function(err, salt) {
+    /**
+     * 비밀번호 암호화
+     * 
+     * auto-gen a salt and hash
+     */
+    bcrypt.hash(user.password, saltRounds, function(err, hash) {
       if(err) return next(err);
-      
-      bcrypt.hash(user.password, salt, function(err, hash) {
-        if(err) return next(err);
 
-        user.password = hash;
-        next();
-      });
+      user.password = hash;
+      next()
     });
+
+    /**
+     * generate a salt and hash on separate function calls
+     * 
+     */ 
+    // bcrypt.genSalt(saltRounds, function(err, salt) {
+    //   if(err) return next(err);
+
+    //   bcrypt.hash(user.password, salt, function(err, hash) {
+    //     if(err) return next(err);
+
+    //     user.password = hash;
+    //     next();
+    //   });
+    // });
+    
   } else {
     next();
   }
