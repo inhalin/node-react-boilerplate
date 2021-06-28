@@ -40,14 +40,15 @@ app.get('/', (req, res) => {
 app.post('/register', (req, res) => {
   // 화원가입에 필요한 client 정보를 가져와 DB에 넣어주기
   const user = new User(req.body);
+
   user.save((err, userInfo) => {
     if (err) return res.json({ sucess: false, err });
 
     return res.status(200).json({ success: true, userInfo });
   });
-})
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`node-react-boilerplate listening at http://localhost:${port}`)
 });
 
