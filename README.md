@@ -6,7 +6,7 @@
 
 node 설치 후 프로젝트 폴더 만들기
 
-```ps
+```ps1
 # 설치된 node 버전 확인
 C:\...\Documents> node -v
 v14.16.0
@@ -36,7 +36,7 @@ Is this OK? (yes)
 
 ### git & github 시작하기
 
-```ps
+```ps1
 echo "# node-react-boilerplate" >> README.md
 git init
 git add README.md
@@ -53,7 +53,7 @@ git push -u origin main
 
 ### `.gitignore`가 적용되지 않을 때 해결법
 
-```ps
+```ps1
 git rm -r --cached .
 git add .
 git commit -m "fixed untracked files"
@@ -86,7 +86,7 @@ git commit -m "fixed untracked files"
 
 원하는 모듈을 검색해서 아래 명령어를 터미널에 실행
 
-```ps
+```ps1
 # npm 5.x 이전
 npm install <package-name> --save
 
@@ -108,7 +108,7 @@ npm 5.x 이전에는 `--save` 옵션을 써줘야 `package.json`의 dependencies
 
 ### 사용중인 npm 패키지 업데이트 하기
 
-```ps
+```ps1
 # 업데이트 가능한 패키지 확인
 npm outdated
 
@@ -153,7 +153,7 @@ app.listen(port, () => {
 
 `app.get()`의 `send()` 안의 내용은 터미널에 `curl http://localhost:3000/`로 Content에 내용이 들어간 것을 확인한다.
 
-```ps
+```ps1
 C:\...\node-react-boilerplate> curl http://localhost:3000/
 
 StatusCode        : 200
@@ -164,7 +164,7 @@ Content           : Hello World!
 
 또는 브라우저에서 `http://localhost:3000`로 들어가면 화면에 출력된 것을 볼 수 있다.
 
-![hello world](images\express-helloworld.png)
+![hello world](images/express-helloworld.png)
 
 ### curl 에러
 
@@ -182,7 +182,7 @@ IE 처음 켜면 설정창 뜨는 것 확인해주면 해결된다.
 
 개발환경에서만 사용하도록 설치하기
 
-```ps
+```ps1
 npm install nodemon --save-dev
 ```
 
@@ -237,7 +237,7 @@ userSchema.pre('save', function(next) {
 });
 ```
 
-![bcrypt](images\bcrypt.png)
+![bcrypt](images/bcrypt.png)
 
 ---
 
