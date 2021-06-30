@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
   },
   role: {
     type: Number,
-    default: 0
+    default: 1
   },
   Image: String,
   token: {
@@ -94,6 +94,22 @@ userSchema.methods.generateToken = function(cb) {
 
     cb(null, user);
   })
+}
+
+// token 복호화 함수
+userSchema.statics.findByToken = function(token, cb) {
+  const user = this;
+
+  jwt.verify(token, 'secretToken', function(err, decoded) {
+    // user_id로 유저를 찾고 client cookie의 토큰과 db의 토큰이 일치하는지 확인
+    user.findOne({
+      "_id": decoded,
+      "'token": token,
+    }, function(err, user) {
+      if(err) return cb(error);
+      cb(null, user);
+    })
+  });
 }
 
 // schema를 모델로 감싸주기

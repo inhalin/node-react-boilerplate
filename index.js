@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const cookieParser = require('cookie-parser');
 const config = require('./config/key');
+const { auth } = require('./middleware/auth')
 const { User } = require('./models/User');
 
 /**
@@ -38,7 +39,7 @@ app.get('/', (req, res) => {
   res.send('Hello World! Nice to see you!')
 });
 
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
   // 화원가입에 필요한 client 정보를 가져와 DB에 넣어주기
   const user = new User(req.body);
 
@@ -49,7 +50,7 @@ app.post('/register', (req, res) => {
   });
 });
 
-app.post('/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
   // 요청된 이메일 DB에서 찾기
   User.findOne({email: req.body.email}, (err, user) => {
     if(!user) {
@@ -81,6 +82,20 @@ app.post('/login', (req, res) => {
         userId: user._id
       });
     });
+  });
+});
+
+app.get('/api/users/auth', auth, (reg, res) => {
+  // 여기까지 미들웨어를 넘어온 user는 auth가 true임
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? true : false,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image
   });
 });
 
