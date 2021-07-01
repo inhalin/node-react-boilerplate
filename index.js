@@ -85,7 +85,7 @@ app.post('/api/users/login', (req, res) => {
   });
 });
 
-app.get('/api/users/auth', auth, (reg, res) => {
+app.get('/api/users/auth', auth, (req, res) => {
   // 여기까지 미들웨어를 넘어온 user는 auth가 true임
   res.status(200).json({
     _id: req.user._id,
@@ -99,7 +99,15 @@ app.get('/api/users/auth', auth, (reg, res) => {
   });
 });
 
+app.get('/api/users/logout', auth, (req, res) => {
+  User.findOneAndUpdate({_id: req.user_id},
+    {token: ''},
+    (err, user) => {
+      if(err) return res.json({success: false, err});
+      return res.status(200).send({success: true, user})
+    });
+});
+
 app.listen(port, () => {
   console.log(`node-react-boilerplate listening at http://localhost:${port}`)
 });
-
