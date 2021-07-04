@@ -59,29 +59,9 @@ git add .
 git commit -m "fixed untracked files"
 ```
 
-### 비밀 설정 정보 관리
-
-`index.js`에서 MongoDB 연결을 위해 URI를 그대로 넣어주면 아이디와 비밀번호가 노출되기 때문에 보안상 심각한 문제가 있다.
-
-설정 정보 파일을 만들어줄 `config` 폴더를 생성하고 [`key.js`](./config/key.js)에서 환경변수에 따라 가져올 파일을 설정해준다.
-
-로컬 환경에서는 `dev.js`에서 정보를 가져오고, 프로덕션 환경에서는 `prod.js`에서 정보를 가져와서 DB에 연결해준다.
-
-`dev.js`는 깃허브에서 공유하면 안되는 파일이므로 `.gitignore`에 추가해준다.
-
 ---
 
-## node modules
-
-### 설치한 패키지 목록
-
-- `express` node.js framework
-- `mongoose` MongoDB 사용 편의를 위한 모듈
-- `nodemon` 소스가 변경되면 자동으로 감지해서 서버를 재가동해줌
-- `bcrypt` 비밀번호 암호화
-- `jsonwebtoken` 로그인시 토큰 생성
-- `cookie-parser` 생성한 토큰을 cookie에 저장
-- `react` FE 라이브러리
+## NPM - Node Package Manager
 
 ### npm 패키지 설치하기
 
@@ -122,6 +102,31 @@ npm update <package-name>
 # 명시된 패키지의 명시된 버전으로 업데이트
 npm update <package-name@version>
 ```
+
+---
+
+## 서버 구성
+
+### 설치한 패키지 목록
+
+- `express` node.js framework
+- `mongoose` MongoDB 사용 편의를 위한 모듈
+- `nodemon` 소스가 변경되면 자동으로 감지해서 서버를 재가동해줌
+- `bcrypt` 비밀번호 암호화
+- `jsonwebtoken` 로그인시 토큰 생성
+- `cookie-parser` 생성한 토큰을 cookie에 저장
+- `react` FE 라이브러리
+- `concurrently` 백엔드 서버와 프론트 서버를 동시에 실행시켜주는 역할
+
+### 비밀 설정 정보 관리
+
+`index.js`에서 MongoDB 연결을 위해 URI를 그대로 넣어주면 아이디와 비밀번호가 노출되기 때문에 보안상 심각한 문제가 있다.
+
+설정 정보 파일을 만들어줄 `config` 폴더를 생성하고 [`key.js`](./config/key.js)에서 환경변수에 따라 가져올 파일을 설정해준다.
+
+로컬 환경에서는 `dev.js`에서 정보를 가져오고, 프로덕션 환경에서는 `prod.js`에서 정보를 가져와서 DB에 연결해준다.
+
+`dev.js`는 깃허브에서 공유하면 안되는 파일이므로 `.gitignore`에 추가해준다.
 
 ---
 
@@ -308,6 +313,10 @@ auth 미들웨어 정의
 
 ---
 
+## 클라이언트 구성
+
+- `npx create-react-app .`로 리액트 앱 시작
+
 ### npm vs npx
 
 #### npm - node package manager
@@ -324,6 +333,13 @@ auth 미들웨어 정의
 - 디스크 스페이스를 낭비하지 않고 항상 최신 버전을 사용할 수 있다.
 
 ---
+
+### 설치한 패키지 목록
+
+- `react-router-dom` 라우터 설정
+- `axios` 프론트에서 request를 보낼때 사용
+- `http-proxy-middleware` CORS 이슈 해결을 위한 proxy 설정
+- `antd` css framework
 
 ### react 구조 설명
 
@@ -384,3 +400,64 @@ ReactDOM.render(
 ### webpack
 
 webpack은 src 안에 있는 파일들만 관리한다. public 아래에 있는 파일들은 건드리지 않는다. webpack으로 관리하고 싶은 이미지나 js 등의 파일들은 src 디렉토리 안에 같이 넣어주어야 한다.
+
+---
+
+### 프로젝트 구조 변경
+
+---
+
+### Axios
+
+client에서 request를 보낼때 이전에는 프론트가 없어서 postman을 사용했지만, 이제는 react에서 보낼 수 있다. 이때 request를 보내기 위해 사용하는 것이 axios다. ajax와 비슷하다고 보면 된다.
+
+```ps
+npm install axios
+```
+
+---
+
+### CORS
+
+Cross Origin Resource Sharing
+
+프론트는 3000번 포트, 백은 5000번 포트를 사용중이다. 포트번호가 다른 서버끼리는 보안을 위해 맘대로 request를 보낼 수 없다. 이를 해결하기 위한 방법은 여러가지가 있지만 여기서는 Proxy를 이용해 해결하였다.
+
+> https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually
+
+---
+
+### proxy server
+
+---
+
+### CSS Framework
+
+---
+
+### Redux
+
+#### dependencies
+
+- `redux`
+- `react-redux`
+- `redux-promise` dispath한테 promise를 받는 방법을 알려줌
+- `redux-thunk` dispatch한테 function을 받는 방법을 알려줌
+
+한번에 여러개를 install 하고 싶을땐 띄어쓰기로 구분해서 써주면 된다.
+
+```
+npm install redux react-redux redux-promise redux-thunk
+```
+
+redux store에서 모든 state을 관리한다. state을 변경하고 싶으면 dispatch를 이용해서 action으로 store 안에 있는 state을 변경한다. action은 객체 형식이어야만 store가 받아서 어떤 처리를 해줄수 있다.
+
+하지만 store에서 항상 객체형식으로만 받지 않고 function이나 promise 형식으로 받을 때도 있다. 그냥 redux는 이런 경우 제대로 변경된 데이터를 처리하지 못한다.
+
+이를 해결하기 위해 redux-promise와 redux-thunk를 사용한다.
+
+`redux-promise`는 dispatch한테 function을 받는 방법을 알려주고, `redux-promise` promise를 받는 방법을 알려준다.
+
+이 둘은 redux를 좀 더 잘 사용할 수 있게 도와주는 미들웨어라고 생각하면 된다.
+
+#### Redux DevTools - chrome extension 설치
