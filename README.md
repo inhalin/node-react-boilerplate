@@ -322,3 +322,65 @@ auth 미들웨어 정의
 
 - 글로벌로 다운받지 않아도 npm registry에서 자동으로 모듈을 찾아서 다운로드 없이 실행해준다.
 - 디스크 스페이스를 낭비하지 않고 항상 최신 버전을 사용할 수 있다.
+
+---
+
+### react 구조 설명
+
+![react-home](images/react-home.png)
+
+client 디렉토리에서 `npm run start`로 react를 시작하면 홈화면이 위와 같이 뜬다. 이 화면은 `client\src\App.js`의 `function App()`이 렌더링 된 화면이다.
+
+```js
+// client\src\App.js
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
+```
+
+`index.js`의 `ReactDOM.render()` 안에서 App 컴포넌트를 가져온다.
+
+```js
+// client\src\index.js
+
+import App from "./App";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App /> {/* 여기에 보여주고 싶은 컴포넌트를 넣어준다 */}
+  </React.StrictMode>,
+  document.getElementById("root") // 컴포넌트 보여줄 곳 지정
+);
+```
+
+`cliend\public\index.html` 파일 안에 있는 `id=root`인 요소에 렌더링할 컴포넌트를 보여준다.
+
+```html
+<div id="root">
+  <!-- 여기에 컴포넌트 내용을 보여준다 -->
+</div>
+```
+
+![react-structure](image/react-structure.png)
+
+### webpack
+
+webpack은 src 안에 있는 파일들만 관리한다. public 아래에 있는 파일들은 건드리지 않는다. webpack으로 관리하고 싶은 이미지나 js 등의 파일들은 src 디렉토리 안에 같이 넣어주어야 한다.
