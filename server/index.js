@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 5000;
 const cookieParser = require('cookie-parser');
 const config = require('./config/key');
 const { auth } = require('./middleware/auth')
@@ -36,8 +36,12 @@ mongoose.connect(config.mongoURI, {
   .catch(err => console.log(err));
 
 app.get('/', (req, res) => {
-  res.send('Hello World! Nice to see you!')
+  res.send('Hello World! Nice to see you!');
 });
+
+app.get('/api/hello', (req, res) => {
+  res.send('Hello!');
+})
 
 app.post('/api/users/register', (req, res) => {
   // 화원가입에 필요한 client 정보를 가져와 DB에 넣어주기
