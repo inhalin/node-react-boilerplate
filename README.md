@@ -81,6 +81,7 @@ git commit -m "fixed untracked files"
 - `bcrypt` 비밀번호 암호화
 - `jsonwebtoken` 로그인시 토큰 생성
 - `cookie-parser` 생성한 토큰을 cookie에 저장
+- `react` FE 라이브러리
 
 ### npm 패키지 설치하기
 
@@ -294,3 +295,30 @@ app.post('/login', (req, res) => {
 - `index.js`에서 사용하는 메서드 정의 - `comparePassword()`,` generateToken()`
 - `userSchema.methods.comparePassword`는 매개변수로 입력한 비밀번호, 콜백함수 두개를 받는다.
 - `userSchema.methods.generateToken`는 매개변수로 콜백함수 하나를 받는다.
+
+---
+
+### Authentication
+
+auth 미들웨어 정의
+
+---
+
+### 로그아웃 기능
+
+---
+
+### npm vs npx
+
+#### npm - node package manager
+
+- 레지스트리 저장소 역할. npm install로 다운로드 받은 모듈은 registry에 저장된다.
+- 어플리케이션을 빌드할 때 사용. 패키지 설치, 버전 관리, 디펜던시 관리 등.
+- npm에 관한 것은 전부 `package.json`에 정의되어 있다.
+- 로컬로 다운받은 패키지는 `node_modules` 폴더에 저장되어 해당 프로젝트 안에서만 사용 가능하다.
+- 글로벌로 다운받은 패키지는 내 컴퓨터 안에 다운이 받아진다.
+
+#### npx
+
+- 글로벌로 다운받지 않아도 npm registry에서 자동으로 모듈을 찾아서 다운로드 없이 실행해준다.
+- 디스크 스페이스를 낭비하지 않고 항상 최신 버전을 사용할 수 있다.
