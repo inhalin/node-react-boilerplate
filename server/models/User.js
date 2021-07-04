@@ -42,7 +42,7 @@ userSchema.pre('save', function(next) {
      * auto-gen a salt and hash
      */
     bcrypt.hash(user.password, saltRounds, function(err, hash) {
-      if(err) return next(err);
+      if (err) return next(err);
 
       user.password = hash;
       next()
@@ -71,7 +71,7 @@ userSchema.pre('save', function(next) {
 // 암호화된 비밀번호와 입력한 비밀번호가 같은지 비교
 userSchema.methods.comparePassword = function(plainPassword, cb) {
   bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
-    if(err) return cb(err);
+    if (err) return cb(err);
 
     cb(null, isMatch);
   });
@@ -86,7 +86,7 @@ userSchema.methods.generateToken = function(cb) {
   user.token = token;
 
   user.save(function(err, user) {
-    if(err) return cb(err);
+    if (err) return cb(err);
 
     cb(null, user);
   })
@@ -100,9 +100,9 @@ userSchema.statics.findByToken = function(token, cb) {
     // user_id로 유저를 찾고 client cookie의 토큰과 db의 토큰이 일치하는지 확인
     user.findOne({
       "_id": decoded,
-      "'token": token,
+      "token": token,
     }, function(err, user) {
-      if(err) return cb(error);
+      if (err) return cb(error);
       cb(null, user);
     })
   });

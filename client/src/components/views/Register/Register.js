@@ -25,7 +25,7 @@ function Register(props) {
   const onNameHandler = (event) => {
     setName(event.currentTarget.value);
   };
-  
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
@@ -41,7 +41,7 @@ function Register(props) {
 
     dispath(registerUser(body))
     .then(response => {
-      if(response.payload.registerSuccess) {
+      if(response.payload.success) {
         props.history.push('/login');
       } else {
         alert('회원가입 실패: ', response.payload);

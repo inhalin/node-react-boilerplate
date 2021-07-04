@@ -23,6 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 // application/json 타입 분석
 app.use(express.json());
 
+app.use(cookieParser());
+
 // mongoose로 어플리케이션과 mongoDB 연결
 const mongoose = require('mongoose');
 
@@ -48,9 +50,9 @@ app.post('/api/users/register', (req, res) => {
   const user = new User(req.body);
 
   user.save((err, userInfo) => {
-    if (err) return res.json({ registerSucess: false, err });
+    if (err) return res.json({ success: false, err });
 
-    return res.status(200).json({ registerSuccess: true, userInfo });
+    return res.status(200).json({ success: true, userInfo });
   });
 });
 
@@ -97,7 +99,6 @@ app.get('/api/users/auth', auth, (req, res) => {
     isAuth: true,
     email: req.user.email,
     name: req.user.name,
-    lastname: req.user.lastname,
     role: req.user.role,
     image: req.user.image
   });
@@ -107,7 +108,7 @@ app.get('/api/users/logout', auth, (req, res) => {
   User.findOneAndUpdate({_id: req.user_id},
     {token: ''},
     (err, user) => {
-      if(err) return res.json({success: false, err});
+      if (err) return res.json({success: false, err});
       return res.status(200).send({success: true, user})
     });
 });
