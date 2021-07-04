@@ -33,7 +33,7 @@ function Login(props) {
     dispatch(loginUser(body))
     .then(response => {
       if(response.payload.loginSuccess) {
-        props.history.push('/')
+        props.history.push('/');
       } else {
         alert(response.payload);
       }
@@ -60,7 +60,7 @@ function Login(props) {
         <input type="password" value={Password} onChange={onPasswordHandler} />
 
         <br />
-        <input type="submit" value="Login" />
+        <button type="submit">Login</button>
       </form>
     </div>
   )
