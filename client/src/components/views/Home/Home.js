@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 function Home(props) {
   useEffect(() => {
-    axios.get('/api/hello')
+    axios.get('/api/home')
     .then(response => {
       console.log(response)
     });
@@ -37,4 +38,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default withRouter(Home);

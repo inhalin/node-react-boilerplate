@@ -11,6 +11,7 @@ import Login from "./components/views/Login/Login";
 import Register from "./components/views/Register/Register";
 import Navbar from "./components/views/Navbar/Navbar";
 import Footer from "./components/views/Footer/Footer";
+import Auth from "./hoc/auth";
 
 function App() {
   return (
@@ -25,9 +26,9 @@ function App() {
           of them to render at a time
         */}
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
+          <Route exact path="/" component={Auth(Home, null)} />
+          <Route exact path="/login" component={Auth(Login, false)} />
+          <Route exact path="/register" component={Auth(Register, false)} />
         </Switch>
         <hr></hr>
         <Footer />

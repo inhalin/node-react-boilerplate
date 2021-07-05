@@ -85,7 +85,7 @@ userSchema.methods.generateToken = function(cb) {
 
   user.token = token;
 
-  user.save(function(err, user) {
+  user.save(function (err, user) {
     if (err) return cb(err);
 
     cb(null, user);
@@ -93,18 +93,18 @@ userSchema.methods.generateToken = function(cb) {
 }
 
 // token 복호화 함수
-userSchema.statics.findByToken = function(token, cb) {
+userSchema.statics.findByToken = function (token, cb) {
   const user = this;
 
-  jwt.verify(token, 'secretToken', function(err, decoded) {
+  jwt.verify(token, 'secretToken', function (err, decoded) {
     // user_id로 유저를 찾고 client cookie의 토큰과 db의 토큰이 일치하는지 확인
     user.findOne({
       "_id": decoded,
       "token": token,
-    }, function(err, user) {
-      if (err) return cb(error);
+    }, function (err, user) {
+      if (err) return cb(err);
       cb(null, user);
-    })
+    });
   });
 }
 
